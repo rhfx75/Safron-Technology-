@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { SectionTitle } from '../components/SectionTitle'
 import { Hero } from '../components/Hero'
 import { ServiceCard } from '../components/ServiceCard'
@@ -47,11 +48,11 @@ export function Home() {
   return (
     <div>
       <Hero />
+      <StandardsCarousel />
       <CompanyIntroduction />
       <OurServices />
       <OurProducts />
       <FeaturedProjects />
-      <BrandsSection />
       <WhyChoose />
       <Industries />
       <CTA />
@@ -60,6 +61,8 @@ export function Home() {
 }
 
 function CompanyIntroduction() {
+  const [imageFailed, setImageFailed] = useState(false)
+
   return (
     <section className="bg-light">
       <div className="container section">
@@ -67,6 +70,7 @@ function CompanyIntroduction() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <SectionTitle
+                className="text-left"
                 title="Your Trusted Engineering & Safety Partner"
                 subtitle="SAFRON TECHNOLOGY is a dedicated engineering solutions provider focused on safety, reliability, innovation, and technical excellence."
               />
@@ -94,13 +98,30 @@ function CompanyIntroduction() {
                 </div>
               </div>
             </div>
-            <div className="h-64 rounded-xl overflow-hidden border border-light bg-white shadow-sm">
-              <img
-                src="https://images.unsplash.com/photo-1581579258858-82d7880a4192?w=800&q=80"
-                alt="Engineering team reviewing fire safety plans"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
+            <div className="h-[320px] aspect-[4/3] rounded-xl overflow-hidden border border-light bg-white shadow-sm relative">
+              {!imageFailed && (
+                <img
+                  src="https://images.unsplash.com/photo-1581579258858-82d7880a4192?w=800&q=80"
+                  alt="Engineering team reviewing fire safety plans"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  onError={() => setImageFailed(true)}
+                />
+              )}
+              {imageFailed && (
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 text-white bg-gradient-to-br from-[#0B5D36] to-[#0F7A45]">
+                  <div className="w-16 h-16 rounded-full bg-orange-500/20 flex items-center justify-center mb-3 mx-auto">
+                    <Shield className="w-8 h-8 text-orange-500" />
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold mb-2">Engineering Excellence</h3>
+                  <p className="text-sm md:text-base max-w-sm mx-auto leading-relaxed opacity-90">
+                    Professional design, quality installation, and responsive after-sales support across Bangladesh.
+                  </p>
+                  <span className="mt-4 inline-block px-3 py-1 rounded-full bg-orange-500 text-[#061E1B] text-xs font-bold uppercase tracking-wider">
+                    10+ Years of Engineering Excellence
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -192,30 +213,42 @@ function FeaturedProjects() {
   )
 }
 
-function BrandsSection() {
+function StandardsCarousel() {
+  const items = [
+    { src: '/assets/partners/rsc.jpg', label: 'RSC', alt: 'Royal Society for the Prevention of Accidents logo' },
+    { src: '/assets/partners/nirapan.jpg', label: 'NIRAPAN', alt: 'NIRAPAN logo' },
+    { src: '/assets/partners/leed.png', label: 'LEED', alt: 'LEED green building logo' },
+    { src: '/assets/partners/bfscd.png', label: 'BFSCD', alt: 'Bangladesh Fire Service and Civil Defence logo' },
+    { src: '/assets/partners/buet.jpg', label: 'BUET', alt: 'Bangladesh University of Engineering and Technology logo' },
+    { src: '/assets/partners/dife.jpg', label: 'DIFE', alt: 'Department of Inspection for Factories and Establishments logo' },
+    { src: '/assets/partners/ul.avif', label: 'UL', alt: 'UL Listed logo' },
+  ]
+
   return (
-    <section className="bg-light border-y border-light">
-      <div className="container section">
-        <SectionTitle title="Technology Brands" subtitle="Working with trusted industry brands to deliver quality fire safety solutions." />
-        <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-center">
-          {[
-            { name: 'NAFFCO', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&q=80' },
-            { name: 'SIMPLEX', img: 'https://images.unsplash.com/photo-1558488887-d9ad34e72142?w=200&q=80' },
-            { name: 'BOSCH', img: 'https://images.unsplash.com/photo-1550684787-e1d66d8e50cb?w=200&q=80' },
-            { name: 'SHIELD', img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&q=80' },
-            { name: 'HOCHIKI', img: 'https://images.unsplash.com/photo-1593028287119-0388217698e9?w=200&q=80' },
-            { name: 'COOPER', img: 'https://images.unsplash.com/photo-1576792782483-390e7a597e35?w=200&q=80' },
-          ].map((b) => (
-            <div key={b.name} className="flex items-center justify-center p-4 rounded-lg border border-light bg-white hover:shadow-md transition-colors group">
-              <img src={b.img} alt={b.name} className="h-10 grayscale group-hover:grayscale-0 transition-all duration-300 opacity-60 group-hover:opacity-100" loading="lazy" />
-            </div>
-          ))}
+    <>
+      <div className="standards-card">
+        <h3 className="standards-title">Standards, Authorities &amp; Institutions We Work With</h3>
+        <div className="standards-track-wrapper">
+          <div className="standards-track">
+            {items.map((item) => (
+              <div key={item.label} className="standards-item" aria-label={item.alt}>
+                <img src={item.src} alt={item.alt} className="standards-logo" loading="lazy" />
+                <span className="standards-label">{item.label}</span>
+              </div>
+            ))}
+            {items.map((item) => (
+              <div key={item.label + '-copy'} className="standards-item" aria-label={item.alt}>
+                <img src={item.src} alt={item.alt} className="standards-logo" loading="lazy" />
+                <span className="standards-label">{item.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
-        <p className="text-center text-sm text-charcoal/60 mt-8 max-w-2xl mx-auto">
-          Brand logos shown are for illustrative purposes. SAFRON TECHNOLOGY does not claim authorized dealership or partnership unless confirmed.
-        </p>
       </div>
-    </section>
+      <p className="standards-disclaimer">
+        Logos and names shown represent authorities, standards and institutions relevant to our work. SAFRON TECHNOLOGY does not claim certification or endorsement unless confirmed.
+      </p>
+    </>
   )
 }
 
@@ -262,15 +295,23 @@ function Industries() {
 }
 
 function CTA() {
+  const [ctaImageFailed, setCtaImageFailed] = useState(false)
+
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1576792782483-390e7a597e35?w=1920&q=80"
-          alt="Fire safety engineering"
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
+        {!ctaImageFailed && (
+          <img
+            src="https://images.unsplash.com/photo-1576792782483-390e7a597e35?w=1920&q=80"
+            alt="Fire safety engineering"
+            className="w-full h-full object-cover"
+            loading="lazy"
+            onError={() => setCtaImageFailed(true)}
+          />
+        )}
+        {ctaImageFailed && (
+          <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#0B5D36] to-[#0F7A45]" />
+        )}
         <div className="absolute inset-0 bg-safron-primary/90" />
       </div>
       <div className="relative z-10 container section pt-24 pb-24 text-center">

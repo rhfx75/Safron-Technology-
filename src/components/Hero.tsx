@@ -1,32 +1,32 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ShieldCheck, Compass, Wrench, Clock, Flame, Zap, Mail } from 'lucide-react'
+import { ArrowRight, ShieldCheck, Compass, Wrench, Clock, Flame, Zap, BellRing } from 'lucide-react'
 
 const STATS = [
-  { label: 'Projects Completed', value: '100+', icon: ShieldCheck },
-  { label: 'Satisfied Clients', value: '50+', icon: Compass },
-  { label: 'Engineers', value: '25+', icon: Wrench },
+  { label: 'Projects Completed', value: '21+', icon: ShieldCheck },
+  { label: 'Satisfied Clients', value: '21+', icon: Compass },
+  { label: 'Engineers', value: '16+', icon: Wrench },
   { label: 'Years of Service', value: '10+', icon: Clock },
 ]
 
 const SERVICES = [
   { label: 'Fire Protection', icon: Flame, desc: 'Sprinkler, hydrant & suppression systems' },
-  { label: 'Fire Detection', icon: Zap, desc: 'Addressable & conventional alarm panels' },
-  { label: 'Electrical Safety', icon: Mail, desc: 'Earthing, lightning & surge protection' },
+  { label: 'Fire Detection', icon: BellRing, desc: 'Addressable & conventional alarm panels' },
+  { label: 'Electrical Safety', icon: Zap, desc: 'Earthing, lightning & surge protection' },
 ]
 
 export function Hero() {
   const [reducedMotion, setReducedMotion] = useState(false)
   const [counterVisible, setCounterVisible] = useState(false)
   const [counterValues, setCounterValues] = useState<Record<string, string>>({
-    '100+': '0+',
-    '50+': '0+',
-    '25+': '0+',
-    '10+': '0+',
+    '21+': '21+',
+    '16+': '16+',
+    '10+': '10+',
   })
   const mousePos = useRef({ x: 0, y: 0 })
   const heroRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -51,8 +51,14 @@ export function Hero() {
   }, [])
 
   useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5
+    }
+  }, [])
+
+  useEffect(() => {
     if (!counterVisible || reducedMotion) return
-    const targets: Record<string, number> = { '100+': 100, '50+': 50, '25+': 25, '10+': 10 }
+    const targets: Record<string, number> = { '21+': 21, '16+': 16, '10+': 10 }
     const intervals: Record<string, ReturnType<typeof setInterval>> = {}
     Object.entries(targets).forEach(([key, target]) => {
       let current = 0
@@ -84,33 +90,33 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative isolation overflow-hidden min-h-[850px] md:min-h-[100vh] max-w-full bg-[#0B2A22] text-white"
+      className="relative isolate z-1 overflow-hidden min-h-[850px] md:min-h-[100vh] max-w-full bg-[#0b2a1f] text-white"
       onMouseMove={handleMouseMove}
     >
+      {/* Hero slideshow background */}
+      <div className="hero-slides absolute inset-0 z-[-3] overflow-hidden">
+        <video
+          ref={videoRef}
+          src="/images/hero/7.mp4"
+          aria-hidden="true"
+          className="hero-slide"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+      </div>
+
+      {/* Green overlay over photos - adjust alpha values below */}
       <div
-        className="absolute inset-0 z-0 pointer-events-none opacity-35"
+        className="absolute inset-0 z-[-2] pointer-events-none"
         style={{
-          backgroundImage: `
-            linear-gradient(rgba(15, 61, 46, 0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(15, 61, 46, 0.3) 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-          backgroundPosition: `${50 + mousePos.current.x * 10}% ${50 + mousePos.current.y * 10}%`,
+          backgroundImage:
+            'linear-gradient(to bottom, rgba(8,40,28,0.80), rgba(8,40,28,0.68))',
         }}
       />
 
-      <div
-        className="absolute inset-0 z-0 pointer-events-none opacity-35 max-w-full"
-        style={{
-          backgroundImage: `
-            linear-gradient(45deg, transparent 48%, rgba(15, 138, 75, 0.03) 48%, rgba(15, 138, 75, 0.03) 52%, transparent 52%),
-            linear-gradient(-45deg, transparent 48%, rgba(242, 140, 40, 0.02) 48%, rgba(242, 140, 40, 0.02) 52%, transparent 52%)
-          `,
-          backgroundSize: '80px 80px',
-        }}
-      />
-
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-35 max-w-full">
+      <div className="absolute inset-0 z-[-1] pointer-events-none max-w-full">
         <svg
           className="w-full h-full max-w-full"
           viewBox="0 0 1440 600"
@@ -124,9 +130,9 @@ export function Hero() {
               <stop offset="100%" stopColor="#064E3B" />
             </linearGradient>
             <linearGradient id="pulseGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F28C28" stop-opacity="0" />
-              <stop offset="50%" stopColor="#F28C28" stop-opacity="0.8" />
-              <stop offset="100%" stopColor="#F28C28" stop-opacity="0" />
+              <stop offset="0%" stopColor="#F28C28" stopOpacity={0} />
+              <stop offset="50%" stopColor="#F28C28" stopOpacity={0.8} />
+              <stop offset="100%" stopColor="#F28C28" stopOpacity={0} />
             </linearGradient>
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
               <feGaussianBlur stdDeviation="4" result="coloredBlur" />
@@ -193,7 +199,7 @@ export function Hero() {
         </svg>
       </div>
 
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-[-1] pointer-events-none">
         <div
           className="floating-element"
           style={{
@@ -229,28 +235,29 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative z-2 container section pt-24 pb-32 max-w-full">
+        <div className="relative z-1 container section pt-[calc(var(--header-h)+64px)] pb-32 max-w-full">
         <div className="mx-auto text-center max-w-[1000px] px-4 sm:px-6 lg:px-8">
           <motion.div
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7 }}
-            className="flex items-center justify-center gap-2 mb-10 opacity-90 max-w-full"
+            className="flex items-center justify-center mb-10 opacity-90 max-w-full"
           >
-            <span className="w-2 h-2 rounded-full bg-[#F28C28]" />
-            <span className="px-4 py-1.5 rounded-full hero-badge text-[11px] font-bold tracking-wider text-[#0F8A4B] uppercase border border-[#0F8A4B]/30 bg-[#0F8A4B]/10">
+            <span className="px-4 py-1.5 rounded-full hero-badge text-[11px] font-bold tracking-wider text-[#0F8A4B] uppercase border border-[#0F8A4B]/30 bg-[#0F8A4B]/10 inline-flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#F28C28]" />
               Precision Engineering
             </span>
           </motion.div>
 
           <motion.h1
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="hero-headline text-[clamp(2.5rem,6vw,5.5rem)] font-[800] text-[#e9fff3] mb-8 leading-[1.05] max-w-[1000px] mx-auto"
+            className="hero-headline text-[clamp(2.5rem,6vw,5.5rem)] font-[800] text-[#ffffff] mb-8 leading-[1.05] max-w-[1000px] mx-auto"
             style={{ textShadow: '0 4px 24px rgba(0,0,0,0.6)' }}
           >
-            Engineering Safety.
+            ENGINEERING SAFETY.
             <br />
-            <span style={{ color: '#f58a1f' }}>Protecting What Matters.</span>
+            <span style={{ color: '#f58a1f' }}>PROTECTING WHAT MATTERS.</span>
           </motion.h1>
 
           <motion.p
@@ -311,7 +318,7 @@ export function Hero() {
                   transition={{ duration: 0.6, delay: STATS.indexOf(stat) * 0.08 }}
                   className="hero-stat text-center group"
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#0F8A4B]/15 flex items-center justify-center mb-4 group-hover:bg-[#0F8A4B]/30 transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-[#0F8A4B]/15 flex items-center justify-center mb-4 mx-auto group-hover:bg-[#0F8A4B]/30 transition-colors">
                     <stat.icon className="w-5 h-5 text-[#0F8A4B]" />
                   </div>
                   <div className="text-3xl md:text-4xl font-bold text-white mb-2">

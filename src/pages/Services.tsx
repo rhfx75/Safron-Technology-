@@ -7,9 +7,9 @@ import { ServiceCard } from '../components/ServiceCard'
 import { gsap, ScrollTrigger } from '../components/ui/use-gsap'
 
 const COUNTER_STATS = [
-  { label: 'Projects', value: '100+', icon: 'Building' },
-  { label: 'Clients', value: '50+', icon: 'Users' },
-  { label: 'Engineers', value: '25+', icon: 'HardHat' },
+  { label: 'Projects', value: '21+', icon: 'Building' },
+  { label: 'Clients', value: '21+', icon: 'Users' },
+  { label: 'Engineers', value: '16+', icon: 'HardHat' },
   { label: 'Years', value: '10+', icon: 'Clock' },
 ]
 
@@ -34,7 +34,9 @@ export function Services() {
   const [isVisible, setIsVisible] = useState(false)
   const [counterVisible, setCounterVisible] = useState(false)
   const [counterValues, setCounterValues] = useState<Record<string, string>>({
-    '100+': '0+', '50+': '0+', '25+': '0+', '10+': '0+',
+    '21+': '21+',
+    '16+': '16+',
+    '10+': '10+',
   })
 
   const filteredServices = useCallback(() => {
@@ -59,7 +61,6 @@ export function Services() {
     gsap.from('.services-heading', {
       scrollTrigger: { trigger: '.services-heading', start: 'top 85%' },
       y: 40,
-      opacity: 0,
       duration: 0.8,
       ease: 'power3.out',
     })
@@ -68,7 +69,6 @@ export function Services() {
     gsap.from('.services-subtext', {
       scrollTrigger: { trigger: '.services-subtext', start: 'top 85%' },
       y: 30,
-      opacity: 0,
       duration: 0.8,
     })
 
@@ -76,7 +76,6 @@ export function Services() {
     gsap.from('.filter-chip', {
       scrollTrigger: { trigger: '.filter-chips', start: 'top 85%' },
       y: 20,
-      opacity: 0,
       duration: 0.6,
       stagger: 0.1,
       ease: 'power3.out',
@@ -86,7 +85,6 @@ export function Services() {
     gsap.from('.service-card-premium', {
       scrollTrigger: { trigger: '.services-grid', start: 'top 85%' },
       y: 50,
-      opacity: 0,
       duration: 0.6,
       stagger: 0.12,
       ease: 'power3.out',
@@ -116,7 +114,7 @@ export function Services() {
 
   useEffect(() => {
     if (!counterVisible) return
-    const targets: Record<string, number> = { '100+': 100, '50+': 50, '25+': 25, '10+': 10 }
+    const targets: Record<string, number> = { '21+': 21, '16+': 16, '10+': 10 }
     const intervals: Record<string, ReturnType<typeof setInterval>> = {}
     Object.entries(targets).forEach(([key, target]) => {
       let current = 0
@@ -220,9 +218,9 @@ export function Services() {
                 return (
                   <div
                     key={stat.label}
-                    className="flex items-center gap-3.5 transition-opacity duration-700"
+                    className="flex flex-col items-center gap-2 transition-opacity duration-700"
                     style={{
-                      opacity: counterVisible ? 1 : 0,
+                      opacity: 1,
                       transform: counterVisible ? 'translateY(0)' : 'translateY(20px)',
                       transition: `all 0.6s ease ${i * 100}ms`,
                     }}
@@ -230,12 +228,10 @@ export function Services() {
                     <div className="w-10 h-10 rounded-full bg-[#0F8A4B]/15 flex items-center justify-center flex-shrink-0">
                       {Icon && <Icon className="w-5 h-5 text-[#0F8A4B]" />}
                     </div>
-                    <div>
-                      <div className="font-bold text-2xl md:text-3xl text-safron-heading-dark">
-                        {counterValues[stat.value as keyof typeof counterValues]}
-                      </div>
-                      <div className="text-xs text-safron-body-text/70 uppercase tracking-wider">{stat.label}</div>
+                    <div className="font-bold text-2xl md:text-3xl text-safron-heading-dark">
+                      {counterValues[stat.value as keyof typeof counterValues]}
                     </div>
+                    <div className="text-xs text-safron-body-text/70 uppercase tracking-wider">{stat.label}</div>
                   </div>
                 )
               })}

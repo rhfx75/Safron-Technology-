@@ -2,7 +2,6 @@ import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X, Phone, ChevronDown } from 'lucide-react'
-import { useLenisScroll } from '../components/ui/use-lenis'
 import { gsap, ScrollTrigger } from '../components/ui/use-gsap'
 
 const LOGO_SRC = '/images/safron-logo.png'
@@ -15,8 +14,6 @@ const NAV_ITEMS = [
   { label: 'Products', to: '/products', hasDropdown: true },
   { label: 'Projects', to: '/projects', hasDropdown: true },
   { label: 'Brands', to: '/brands', hasDropdown: false },
-  { label: 'Resources', to: '/resources', hasDropdown: true },
-  { label: 'Contact', to: '/contact', hasDropdown: false },
 ] as const
 
 const DROPDOWN_ITEMS: Record<string, { label: string; to: string }[]> = {
@@ -49,18 +46,11 @@ const DROPDOWN_ITEMS: Record<string, { label: string; to: string }[]> = {
     { label: 'Educational Institutions', to: '/projects?category=educational' },
     { label: 'Textile & Manufacturing', to: '/projects?category=textile' },
   ],
-  Resources: [
-    { label: 'Blog / Articles', to: '/resources' },
-    { label: 'Fire Safety Tips', to: '/resources?category=tips' },
-    { label: 'Case Studies', to: '/resources?category=case-studies' },
-    { label: 'Downloads', to: '/resources?category=downloads' },
-  ],
 }
 
 export function Navbar() {
   const location = useLocation()
   const pathname = location.pathname
-  const lenis = useLenisScroll()
   const [isOpen, setIsOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
@@ -90,19 +80,17 @@ export function Navbar() {
     closeDrawer()
   }, [closeDrawer])
 
-  // Track scroll position for glassmorphism effect
+  // Scroll-driven header shadow: vanilla passive listener, toggles after 10px
   useEffect(() => {
-    if (!lenis) return
     const onScroll = () => {
-      const scroll = lenis.scroll
-      if (scroll > 80 && !scrolled) setScrolled(true)
-      if (scroll <= 80 && scrolled) setScrolled(false)
+      const y = window.scrollY
+      if (y > 10 && !scrolled) setScrolled(true)
+      if (y <= 10 && scrolled) setScrolled(false)
     }
-    lenis.on('scroll', onScroll)
-    return () => {
-      lenis.off('scroll', onScroll)
-    }
-  }, [lenis, scrolled])
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [scrolled])
 
   // GSAP logo resize on scroll
   useEffect(() => {
@@ -164,14 +152,14 @@ export function Navbar() {
   return (
     <nav
       ref={navRef}
-      className={`nav fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'nav-scrolled' : ''}`}
+      className={`nav fixed top-0 left-0 right-0 transition-all duration-300 ${scrolled ? 'nav-scrolled' : ''}`}
       onKeyDown={(e) => handleKeyDown(e.nativeEvent)}
     >
-      <div className="nav-inner w-full max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+      <div className="nav-inner w-full max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 h-full grid grid-cols-[auto_1fr_auto] items-center gap-4">
         {/* Brand */}
         <Link
           to="/"
-          className="nav-brand flex items-center gap-2 flex-shrink-0"
+          className="nav-brand flex items-center gap-2 flex-shrink-0 justify-self-start"
         >
           <img
             ref={logoRef}
@@ -186,7 +174,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop navigation links */}
-        <div className="nav-links hidden lg:flex flex-1 min-w-0 justify-center gap-3">
+        <div className="nav-links hidden lg:flex [@media(max-width:1199px)]:hidden flex-1 min-w-0 justify-center gap-3 justify-self-center">
           {NAV_ITEMS.map((item) => {
             const hasDropdown = item.hasDropdown
             const isActive = activeKey === item.label
@@ -244,7 +232,7 @@ export function Navbar() {
         </div>
 
         {/* Right CTA group */}
-        <div className="nav-actions flex items-center gap-6 flex-shrink-0">
+        <div className="nav-actions flex items-center gap-3 flex-shrink-0 min-w-0 justify-self-end">
           <Link to="/contact">
             <button className="get-quote-btn px-5 py-2.5 text-[13px] font-medium text-safron-deep-teal border border-safron-deep-teal/30 rounded-md hover:bg-safron-mint transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-safron-primary whitespace-nowrap shrink-0 hidden lg:inline-flex">
               Get a Quote
@@ -284,7 +272,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.3 }}
-              className="nav-drawer open fixed inset-y-0 right-0 z-50 w-full max-w-[420px] bg-white border-l border-safron-border shadow-2xl"
+              className="nav-drawer open fixed top-[var(--header-h)] bottom-0 right-0 z-50 w-full max-w-[420px] bg-white border-l border-safron-border shadow-2xl"
               id="nav-drawer"
               role="navigation"
               aria-label="Mobile navigation"

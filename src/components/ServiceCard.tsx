@@ -40,7 +40,7 @@ export function ServiceCard({ id, title, description, icon, image, category, ind
     <AnimatePresence>
       {visible && (
         <motion.article
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 1, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.5, delay: index * 0.08 }}

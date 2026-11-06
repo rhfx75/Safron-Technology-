@@ -6,11 +6,12 @@ export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reducedMotion) return
+    const media = window.matchMedia('(hover: hover) and (pointer: fine)')
+    if (!media.matches) return
 
-    const dot = dotRef.current!
-    const ring = ringRef.current!
+    const dot = dotRef.current
+    const ring = ringRef.current
+    if (!dot || !ring) return
 
     let mouseX = 0
     let mouseY = 0
@@ -18,6 +19,7 @@ export function CustomCursor() {
     let dotY = 0
     let ringX = 0
     let ringY = 0
+    let hasMoved = false
 
     const updateCursor = () => {
       const distX = mouseX - dotX
@@ -39,6 +41,12 @@ export function CustomCursor() {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX
       mouseY = e.clientY
+      if (!hasMoved) {
+        hasMoved = true
+        document.body.classList.add('has-custom-cursor')
+        gsap.to(dot, { opacity: 1, duration: 0.3 })
+        gsap.to(ring, { opacity: 1, duration: 0.3 })
+      }
     }
 
     const handleMouseDown = () => {
@@ -52,7 +60,8 @@ export function CustomCursor() {
     }
 
     const handleHover = (e: MouseEvent) => {
-      const target = e.currentTarget as HTMLElement
+      const target = e.target as Node | null
+      if (!target || !(target instanceof Element)) return
       if (target.closest('a, button, [role="button"], .nav-link, .view-all-button')) {
         gsap.to(dot, { scale: 2.2, duration: 0.2, backgroundColor: 'rgba(242, 140, 40, 0.25)' })
         gsap.to(ring, { scale: 1.6, duration: 0.2, borderColor: 'rgba(242, 140, 40, 0.6)' })
@@ -73,6 +82,7 @@ export function CustomCursor() {
     updateCursor()
 
     return () => {
+      document.body.classList.remove('has-custom-cursor')
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mousedown', handleMouseDown)
       document.removeEventListener('mouseup', handleMouseUp)
@@ -83,8 +93,8 @@ export function CustomCursor() {
 
   return (
     <>
-      <div ref={dotRef} className="fixed pointer-events-none z-[9999] w-3 h-3 rounded-full bg-[#0F8A4B] translate-x-[-50%] translate-y-[-50%] transition-transform duration-75 ease-out" />
-      <div ref={ringRef} className="fixed pointer-events-none z-[9999] w-10 h-10 rounded-full border-2 border-[#0F8A4B]/60 translate-x-[-50%] translate-y-[-50%] transition-transform duration-150 ease-out" />
+      <div ref={dotRef} className="custom-cursor-dot fixed pointer-events-none z-[9999] w-3 h-3 rounded-full bg-[#0F8A4B] translate-x-[-50%] translate-y-[-50%] transition-transform duration-75 ease-out opacity-0" />
+      <div ref={ringRef} className="custom-cursor-ring fixed pointer-events-none z-[9999] w-10 h-10 rounded-full border-2 border-[#0F8A4B]/60 translate-x-[-50%] translate-y-[-50%] transition-transform duration-150 ease-out opacity-0" />
     </>
   )
 }

@@ -1,8 +1,6 @@
-import { SectionTitle } from '../components/SectionTitle'
 import { ProjectCard } from '../components/ProjectCard'
 import { projects } from '../data/projects'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const CATEGORIES = [
   'All Projects',
@@ -13,48 +11,99 @@ const CATEGORIES = [
   'Manufacturing',
 ] as const
 
+const STATS = [
+  { label: 'Projects', value: projects.length.toString() },
+  { label: 'Years', value: '10+' },
+  { label: 'Districts', value: '8+' },
+]
+
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState<typeof CATEGORIES[number]>('All Projects')
+  const [counts, setCounts] = useState<Record<string, string>>({
+    Projects: '0',
+    Years: '0+',
+    Districts: '0+',
+  })
 
   const filteredProjects = activeCategory === 'All Projects'
     ? projects
     : projects.filter((p) => p.category === activeCategory)
 
+  useEffect(() => {
+    if (document.querySelector('.prefers-reduced-motion')) return
+    const targets: Record<string, number> = { Projects: projects.length, Years: 10, Districts: 8 }
+    const intervals: Record<string, ReturnType<typeof setInterval>> = {}
+    Object.entries(targets).forEach(([key, target]) => {
+      let current = 0
+      const step = Math.ceil(target / 40)
+      intervals[key] = setInterval(() => {
+        current += step
+        if (current >= target) {
+          current = target
+          clearInterval(intervals[key])
+        }
+        const suffix = key === 'Projects' ? '' : '+'
+        setCounts((prev) => ({ ...prev, [key]: `${current}${suffix}` }))
+      }, 30)
+    })
+    return () => Object.values(intervals).forEach(clearInterval)
+  }, [])
+
   return (
     <div>
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
+      <section className="relative isolate z-1 overflow-hidden projects-hero">
+        <div className="absolute inset-0 z-[-2] projects-gradient-bg" />
+        <div className="absolute inset-0 z-[-1] projects-blueprint" />
+        <div className="absolute top-0 left-0 z-[-1] projects-circuit projects-circuit-tl" />
+        <div className="absolute top-0 right-0 z-[-1] projects-circuit projects-circuit-tr" />
+        <div className="absolute bottom-0 left-0 z-[-1] projects-circuit projects-circuit-bl" />
+        <div className="absolute bottom-0 right-0 z-[-1] projects-circuit projects-circuit-br" />
+        <div className="absolute inset-0 z-[-1] projects-orbs">
+          <div className="project-orb project-orb-green" />
+          <div className="project-orb project-orb-orange" />
+        </div>
+        <div className="absolute inset-0 z-[-1]">
           <img
             src="https://images.unsplash.com/photo-1558828659-3f4d618c61cf?w=1920&q=80"
             alt="Engineering projects"
-            className="w-full h-[400px] object-cover"
+            className="w-full h-[400px] object-cover opacity-50"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-safron-deep-teal/85" />
         </div>
-        <div className="relative z-10 container section pt-20 pb-24 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Featured Projects</h1>
-          <p className="text-lg text-white max-w-xl mx-auto">
-            Completed engineering projects across industrial, commercial, and institutional facilities.
-          </p>
+        <svg className="projects-wave absolute bottom-[-1px] left-0 right-0 z-0" viewBox="0 0 1440 70" preserveAspectRatio="none">
+          <path d="M0 35 Q 360 0 720 35 T 1440 35 V70 H0 Z" fill="#f4f9f6" />
+        </svg>
+
+        <div className="relative z-10 container section pt-[calc(var(--header-h)+64px)] pb-24 text-center">
+          <div className="projects-stat-grid grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 animate-stats">
+            {STATS.map((s) => (
+              <div key={s.label} className="project-stat-card">
+                <div className="project-stat-value">{counts[s.label]}</div>
+                <div className="project-stat-label">{s.label}</div>
+              </div>
+            ))}
+          </div>
+          <span className="projects-badge">OUR WORK</span>
+          <h1 className="hero-title text-4xl md:text-6xl font-bold mb-4 animate-hero">Featured Projects</h1>
+          <p className="text-lg text-[#d9f2e4] max-w-xl mx-auto animate-hero">Completed engineering projects across industrial, commercial, and institutional facilities.</p>
         </div>
       </section>
 
-      <section className="bg-[#F5FAF8]">
-        <div className="container section">
-          <SectionTitle
-            title="Project Portfolio"
-            subtitle="Explore our completed fire safety and engineering projects across Bangladesh."
-          />
+      <section className="relative bg-[#f4f9f6] projects-portfolio-bg">
+        <div className="absolute inset-0 z-[-1] projects-portal-glow" />
 
-          <div className="flex flex-wrap gap-2 justify-center mb-12">
+        <div className="container section">
+          <h2 className="text-3xl md:text-4xl font-bold text-safron-deep-forest mb-2 text-center">Project Portfolio</h2>
+          <p className="text-safron-muted-text text-center mb-12 max-w-2xl mx-auto">Explore our completed fire safety and engineering projects across Bangladesh.</p>
+
+          <div className="flex flex-wrap gap-2 justify-center mb-14">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-5 py-2 rounded-full border text-sm font-medium transition-all duration-200 ${
                   activeCategory === cat
-                    ? 'bg-safron-primary text-white border-safron-primary shadow-md'
+                    ? 'bg-gradient-to-r from-[#0b6b3a] to-[#0e9a4f] text-white border-transparent shadow-lg shadow-[#0b6b3a]/30'
                     : 'border-light text-charcoal hover:bg-safron-secondary hover:text-white hover:border-safron-secondary bg-white'
                 }`}
               >
@@ -63,22 +112,16 @@ export function Projects() {
             ))}
           </div>
 
-          <div className="projects-masonry">
+          <div className="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-28">
             {filteredProjects.map((p) => (
-              <motion.div
-                key={p.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: filteredProjects.indexOf(p) * 0.05 }}
-                className="project-masonry-item"
-              >
+              <div key={p.id} className="project-card-reveal">
                 <ProjectCard key={p.id} {...p} />
-              </motion.div>
+              </div>
             ))}
           </div>
 
           {filteredProjects.length > 0 && (
-            <div className="text-center mt-12">
+            <div className="text-center mt-16">
               <a
                 href="/projects"
                 className="inline-flex items-center gap-2 text-safron-primary font-semibold hover:text-safron-secondary transition-colors"

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 export function About() {
   return (
     <div>
-      <section className="relative overflow-hidden">
+      <section className="relative isolate z-1 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1581579258858-82d7880a4192?w=1920&q=80"
@@ -15,7 +15,7 @@ export function About() {
           />
           <div className="absolute inset-0 bg-safron-primary/85" />
         </div>
-        <div className="relative z-10 container section pt-20 pb-24 text-center">
+        <div className="relative z-10 container section pt-[calc(var(--header-h)+64px)] pb-24 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">About Us</h1>
           <p className="text-lg text-white max-w-xl mx-auto">
             Engineering safety solutions built on reliability, innovation, and technical excellence.
@@ -43,7 +43,7 @@ export function About() {
               text: 'We combine professional engineering design, quality installation, and responsive after-sales support to ensure every system performs when it matters most.',
               icon: <Shield className="w-6 h-6 text-safron-secondary" />,
             }].map((item, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1, duration: 0.5 }} className="p-8 rounded-xl border border-light bg-white card-hover text-center">
+              <motion.div key={i} initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1, duration: 0.5 }} className="p-8 rounded-xl border border-light bg-white card-hover text-center">
                 <div className="w-12 h-12 rounded-lg bg-safron-secondary/10 flex items-center justify-center text-safron-secondary mx-auto mb-4">{item.icon}</div>
                 <h3 className="font-bold text-safron-heading-dark mb-3">{item.title}</h3>
                 <p className="text-safron-body-text text-base leading-relaxed">{item.text}</p>

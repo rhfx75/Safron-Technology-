@@ -67,7 +67,7 @@ export function ProductDetail() {
               />
             ) : (
               <div className="detail-image-placeholder">
-                <span className="placeholder-label">Image Coming Soon</span>
+                <span className="placeholder-label">{product.name}</span>
               </div>
             )}
           </div>

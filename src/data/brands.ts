@@ -3,15 +3,22 @@ export interface Brand {
   name: string
   image: string
   alt: string
+  description: string
 }
 
 export const brands: Brand[] = [
-  { id: 'naffco', name: 'NAFFCO', image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&q=80', alt: 'NAFFCO brand' },
-  { id: 'simplex', name: 'SIMPLEX', image: 'https://images.unsplash.com/photo-1558488887-d9ad34e72142?w=200&q=80', alt: 'SIMPLEX brand' },
-  { id: 'bosch', name: 'BOSCH', image: 'https://images.unsplash.com/photo-1550684787-e1d66d8e50cb?w=200&q=80', alt: 'BOSCH brand' },
-  { id: 'shield', name: 'SHIELD', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&q=80', alt: 'SHIELD brand' },
-  { id: 'hochiki', name: 'HOCHIKI', image: 'https://images.unsplash.com/photo-1593028287119-0388217698e9?w=200&q=80', alt: 'HOCHIKI brand' },
-  { id: 'cooper', name: 'COOPER', image: 'https://images.unsplash.com/photo-1576792782483-390e7a597e35?w=200&q=80', alt: 'COOPER brand' },
+  { id: 'naffco', name: 'NAFFCO', image: '/images/brands/naffco.webp', alt: 'NAFFCO brand', description: 'Firefighting equipment and integrated fire protection systems.' },
+  { id: 'simplex', name: 'SIMPLEX', image: '/images/brands/simplex.png', alt: 'SIMPLEX brand', description: 'Fire detection and alarm panels.' },
+  { id: 'bosch', name: 'BOSCH', image: '/images/brands/bosch.png', alt: 'BOSCH brand', description: 'Fire alarm and security systems.' },
+  { id: 'hochiki', name: 'HOCHIKI', image: '/images/brands/hochiki.webp', alt: 'HOCHIKI brand', description: 'Fire detection devices and intelligent alarm systems.' },
+  { id: 'sffco', name: 'SFFECO', image: '/images/brands/sffco.png', alt: 'SFFECO brand', description: 'Fire pumps, fire suppression and protection equipment.' },
+  { id: 'siemens', name: 'SIEMENS', image: '/images/brands/siemens.png', alt: 'SIEMENS brand', description: 'Intelligent fire detection and building safety solutions.' },
+  { id: 'patterson', name: 'PATTERSON', image: '/images/brands/patterson.png', alt: 'PATTERSON brand', description: 'Fire pump systems and water-based fire protection solutions.' },
+  { id: 'notifier', name: 'NOTIFIER', image: '/images/brands/notifier.png', alt: 'NOTIFIER brand', description: 'Intelligent fire alarm and life safety systems.' },
 ]
 
 export const brandCategories = ['Fire Alarm', 'Suppression', 'Detection', 'Extinguishing', 'Valves', 'Lighting']
+
+export function getBrandById(id: string) {
+  return brands.find((b) => b.id === id)
+}

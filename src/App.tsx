@@ -10,6 +10,7 @@ import { ProductCatalogues } from './pages/ProductCatalogues'
 import { Projects } from './pages/Projects'
 import { ProjectDetail } from './pages/ProjectDetail'
 import { Brands } from './pages/Brands'
+import { BrandDetail } from './pages/BrandDetail'
 import { Resources } from './pages/Resources'
 import { Contact } from './pages/Contact'
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:id" element={<ProjectDetail />} />
           <Route path="brands" element={<Brands />} />
+          <Route path="brands/:id" element={<BrandDetail />} />
           <Route path="resources" element={<Resources />} />
           <Route path="contact" element={<Contact />} />
         </Route>

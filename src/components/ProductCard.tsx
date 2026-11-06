@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { findCategory } from '../data/products'
+import { brands } from '../data/brands'
+import { Phone, ArrowRight } from 'lucide-react'
 
 interface ProductCardProps {
   slug: string
@@ -9,6 +11,7 @@ interface ProductCardProps {
   model?: string
   shortDescription: string
   image: string | null
+  availability?: string
 }
 
 export function ProductCard({
@@ -19,45 +22,72 @@ export function ProductCard({
   model,
   shortDescription,
   image,
+  availability,
 }: ProductCardProps) {
   const categoryLabel = findCategory(category)?.label || category
-  const href = `/products/${slug}`
+
+  const brandEntry = brand ? brands.find((b) => b.name.toLowerCase() === brand.toLowerCase()) : null
+
+  const whatsAppNumber = '8801788585741'
+  const whatsAppMessage = `Hello SAFRON TECHNOLOGY, I would like to request a quotation for ${name}. Please share the price, specifications, availability, and delivery details.`
+  const whatsAppUrl = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(whatsAppMessage)}`
 
   return (
     <article className="product-card">
-      <Link to={href} className="product-card-link" tabIndex={-1}>
-        <div className="product-card-image">
-          {image ? (
-            <img
-              src={image}
-              alt={name}
-              loading="lazy"
-              decoding="async"
-            />
-          ) : (
-            <div className="product-card-placeholder">
-              <span className="placeholder-label">Image Coming Soon</span>
-            </div>
-          )}
-        </div>
-        <div className="product-card-bar">
-          <span className="product-card-category">{categoryLabel}</span>
-          <h3 className="product-card-name">{name}</h3>
-        </div>
-      </Link>
-      <div className="product-card-meta">
-        {brand && (
-          <span className="product-card-brand">{brand}</span>
-        )}
-        {model && (
-          <span className="product-card-model">Model: {model}</span>
+      <div className="product-card-accent" />
+      <div className="product-card-image">
+        {image ? (
+          <img
+            src={image}
+            alt={name}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className="product-card-placeholder">
+            Image Coming Soon
+          </div>
         )}
       </div>
-      <p className="product-card-description">{shortDescription}</p>
+      <div className="product-card-info">
+        <span className="product-card-category">{categoryLabel}</span>
+        <h3 className="product-card-name">{name}</h3>
+        <div className="product-card-chips">
+          {brand && (
+            <span className="product-card-chip">
+              {brandEntry ? (
+                <Link to={`/brands/${brandEntry.id}`} className="chip-link">
+                  {brand}
+                </Link>
+              ) : (
+                brand
+              )}
+            </span>
+          )}
+          {model && (
+            <span className="product-card-chip">Model: {model}</span>
+          )}
+        </div>
+        <p className="product-card-description">{shortDescription}</p>
+      </div>
       <div className="product-card-actions">
-        <Link to={href} className="product-card-view-details">
-          View Details
+        <Link
+          to={`/products/${slug}`}
+          className="product-card-view-details"
+        >
+          View Details <ArrowRight className="w-3.5 h-3.5" />
         </Link>
+        {availability === 'inquiry-required' && (
+          <a
+            href={whatsAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="product-card-quote"
+          >
+            <Phone className="w-3.5 h-3.5" />
+            Request Quote
+          </a>
+        )}
       </div>
     </article>
   )

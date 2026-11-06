@@ -160,7 +160,6 @@
     height: 48px;
   }
 }
-
 .ticks {
   position: relative;
   width: 100%;
@@ -177,8 +176,148 @@
     left: 0;
     border-left-color: var(--border);
   }
+
   &::after {
     right: 0;
     border-right-color: var(--border);
   }
+}
+
+/* ============================================================
+   Brand Detail Page
+   ============================================================ */
+
+.brand-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f58a1f;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.brand-back-link:hover {
+  text-decoration: underline;
+}
+
+.brand-logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.brand-detail-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  background: var(--color-safron-white);
+  border-radius: 16px;
+  padding: 0.5rem;
+  box-shadow: 0 8px 24px rgba(15, 59, 53, 0.12);
+}
+
+.brand-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.brand-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ============================================================
+   Navbar – SAFRON TECHNOLOGY (single shared rule set)
+   ============================================================ */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--header-h);
+  background: #ffffff;
+  border-bottom: 1px solid #e3ece6;
+  box-shadow: 0 2px 14px rgba(7, 36, 26, 0.10);
+  z-index: 10000;
+  box-sizing: border-box;
+}
+
+.nav-scrolled {
+  background: #ffffff;
+  border-bottom: 1px solid #b8c9c2;
+  box-shadow: 0 4px 20px rgba(7, 36, 26, 0.14);
+}
+
+/* Link box: relative so the active underline stays inside the link */
+.nav-link {
+  position: relative;
+  color: #0b6b3a;
+  text-decoration: none;
+}
+
+/* Active link underline – orange, contained within its own link area */
+.nav-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #0a8f4f, #f28c28);
+  transition: width 0.25s ease;
+  pointer-events: none;
+}
+
+.nav-link:hover .nav-underline,
+.nav-link[aria-current="page"] .nav-underline,
+.nav-link.active .nav-underline {
+  width: 100%;
+}
+
+/* Dropdown wrapper establishes the positioning context */
+.dropdown-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Dropdown – white, fully opaque, above hero content */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 59, 53, 0.10);
+  border-top: 3px solid #0a8f4f;
+  border-radius: 10px;
+  box-shadow: 0 18px 40px rgba(15, 59, 53, 0.14);
+  padding: 8px 0;
+  z-index: 20000;
+}
+
+/* Mobile drawer – positioned directly below the header */
+.nav-drawer {
+  top: var(--header-h);
+  bottom: 0;
+  right: 0;
+}
+
+/* Keep drawer backdrop opaque */
+.nav-drawer-overlay {
+  background: rgba(6, 30, 27, 0.35);
 }

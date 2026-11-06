@@ -11,7 +11,7 @@ const CONTACT_INFO = [
 export function Contact() {
   return (
     <div>
-      <section className="relative overflow-hidden">
+      <section className="relative isolate z-1 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&q=80"
@@ -21,7 +21,7 @@ export function Contact() {
           />
           <div className="absolute inset-0 bg-safron-primary/80" />
         </div>
-        <div className="relative z-10 container section pt-20 pb-24 text-center">
+        <div className="relative z-10 container section pt-[calc(var(--header-h)+64px)] pb-24 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Contact Us</h1>
           <p className="text-lg text-white max-w-xl mx-auto">
             Ready to discuss your fire safety and engineering requirements? Get in touch with our team.
