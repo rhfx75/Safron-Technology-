@@ -146,7 +146,7 @@ export function ContactForm() {
             </div>
             <div>
               <div className="text-sm font-semibold text-safron-primary">WhatsApp</div>
-              <div className="text-xs text-charcoal/60">01788585741</div>
+              <div className="text-xs text-charcoal/60">+880 1788-585741</div>
             </div>
           </a>
           <a href="tel:+8801788585741" className="flex items-center gap-3 w-full">
@@ -155,7 +155,16 @@ export function ContactForm() {
             </div>
             <div>
               <div className="text-sm font-semibold text-safron-primary">Call Us</div>
-              <div className="text-xs text-charcoal/60">01788585741</div>
+              <div className="text-xs text-charcoal/60">+880 1788-585741</div>
+            </div>
+          </a>
+          <a href="tel:+8801819727227" className="flex items-center gap-3 w-full">
+            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-safron-background flex items-center justify-center text-safron-primary">
+              <Phone className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-safron-primary">Call Us</div>
+              <div className="text-xs text-charcoal/60">+880 1819-727227</div>
             </div>
           </a>
           <a href="mailto:safrontechnology01@gmail.com" className="flex items-center gap-3 w-full">

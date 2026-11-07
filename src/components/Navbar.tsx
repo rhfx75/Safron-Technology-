@@ -347,7 +347,11 @@ export function Navbar() {
                 <div className="nav-drawer-contact space-y-2">
                   <a href="tel:+8801788585741" className="flex items-center gap-3 text-safron-deep-teal font-medium">
                     <Phone className="w-4 h-4 text-safron-primary shrink-0" />
-                    <span>01788585741</span>
+                    <span>+880 1788-585741</span>
+                  </a>
+                  <a href="tel:+8801819727227" className="flex items-center gap-3 text-safron-deep-teal font-medium">
+                    <Phone className="w-4 h-4 text-safron-primary shrink-0" />
+                    <span>+880 1819-727227</span>
                   </a>
                   <a href="mailto:safrontechnology01@gmail.com" className="flex items-center gap-3 text-safron-muted-text text-sm hover:text-safron-primary transition-colors">
                     <span>✉ safrontechnology01@gmail.com</span>

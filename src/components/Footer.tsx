@@ -159,7 +159,11 @@ export function Footer() {
           <ul className="sf-contact">
             <li>
               <i data-lucide="phone" />
-              <a href="tel:01788585741">01788585741</a>
+              <a href="tel:+8801788585741">+880 1788-585741</a>
+            </li>
+            <li>
+              <i data-lucide="phone" />
+              <a href="tel:+8801819727227">+880 1819-727227</a>
             </li>
             <li>
               <i data-lucide="mail" />
@@ -169,7 +173,7 @@ export function Footer() {
             </li>
             <li>
               <i data-lucide="map-pin" />
-              <span>House-12, Road-04, Block-C, Banani, Dhaka-1213</span>
+              <span>Dakkhingoan, Sabujbag, Dhaka, Bangladesh</span>
             </li>
             <li>
               <i data-lucide="clock" />

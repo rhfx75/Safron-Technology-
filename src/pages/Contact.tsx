@@ -3,9 +3,10 @@ import { ContactForm } from '../components/ContactForm'
 import { Mail, Phone, MapPin } from 'lucide-react'
 
 const CONTACT_INFO = [
-  { icon: Phone, label: '01788585741', href: 'tel:+8801788585741', title: 'Phone' },
+  { icon: Phone, label: '+880 1788-585741', href: 'tel:+8801788585741', title: 'Phone' },
+  { icon: Phone, label: '+880 1819-727227', href: 'tel:+8801819727227', title: 'Phone' },
   { icon: Mail, label: 'safrontechnology01@gmail.com', href: 'mailto:safrontechnology01@gmail.com', title: 'Email' },
-  { icon: MapPin, label: 'House-12, Road-04, Block-C, Banani, Dhaka-1213, Bangladesh', href: '#', title: 'Address' },
+  { icon: MapPin, label: 'Dakkhingoan, Sabujbag, Dhaka, Bangladesh', href: '#', title: 'Address' },
 ]
 
 export function Contact() {
@@ -63,7 +64,7 @@ export function Contact() {
                   </div>
                 </div>
 <a href="https://wa.me/8801788585741" target="_blank" rel="noopener noreferrer" className="text-[#25D366] text-sm font-semibold hover:underline">
-  01788585741
+  +880 1788-585741
 </a>
                 <p className="text-xs text-charcoal/60 mt-2">Click to start a WhatsApp conversation</p>
               </div>

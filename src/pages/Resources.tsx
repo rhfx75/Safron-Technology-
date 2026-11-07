@@ -89,7 +89,7 @@ export function Resources() {
                 <Phone className="w-5 h-5 text-safron-secondary mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-bold text-safron-primary">Call Us</h4>
-                  <p className="text-charcoal/70 text-sm">01788585741</p>
+                  <p className="text-charcoal/70 text-sm">+880 1788-585741</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -103,7 +103,7 @@ export function Resources() {
                 <MapPin className="w-5 h-5 text-safron-secondary mt-0.5 flex-shrink-0" />
                 <div>
                   <h4 className="font-bold text-safron-primary">Visit Us</h4>
-                  <p className="text-charcoal/70 text-sm">House-12, Road-04, Block-C, Banani, Dhaka-1213, Bangladesh</p>
+                  <p className="text-charcoal/70 text-sm">Dakkhingoan, Sabujbag, Dhaka, Bangladesh</p>
                 </div>
               </div>
             </div>
