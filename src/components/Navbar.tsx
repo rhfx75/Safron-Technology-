@@ -165,8 +165,9 @@ export function Navbar() {
             ref={logoRef}
             src={LOGO_SRC}
             alt="SAFRON TECHNOLOGY"
-            className="w-auto h-[40px] md:h-[44px] object-contain block flex-shrink-0"
+            className="w-auto h-[40px] md:h-[44px] object-contain block flex-shrink-0 max-h-[44px] md:max-h-[48px]"
             loading="eager"
+            style={{ maxWidth: '200px' }}
           />
           <span className="nav-brand-name hidden lg:block whitespace-nowrap font-extrabold text-safron-deep-teal tracking-tight text-[20px] md:text-[22px]">
             SAFRON<span className="text-safron-primary ml-1">TECHNOLOGY</span>
@@ -279,7 +280,7 @@ export function Navbar() {
             >
               <div className="nav-drawer-head flex items-center justify-between p-6 border-b border-safron-border">
                 <div className="flex items-center gap-2">
-                  <img src={LOGO_SRC} alt="SAFRON TECHNOLOGY" className="h-[32px] w-auto block" loading="eager" />
+                  <img src={LOGO_SRC} alt="SAFRON TECHNOLOGY" className="h-[32px] w-auto block max-h-[36px]" loading="eager" />
                   <span className="font-extrabold text-safron-deep-teal text-[18px] leading-none tracking-tight">
                     SAFRON<span className="text-safron-primary ml-1">TECHNOLOGY</span>
                   </span>

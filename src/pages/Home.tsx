@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { SectionTitle } from '../components/SectionTitle'
-import { Hero } from '../components/Hero'
 import { ServiceCard } from '../components/ServiceCard'
 import { ProductCard } from '../components/ProductCard'
 import { ProjectCard } from '../components/ProjectCard'
@@ -44,11 +43,162 @@ const INDUSTRIES = [
   'Residential & Mixed-Use Buildings',
 ]
 
+const STANDARDS_MARQUEE_ITEMS = [
+  { src: '/assets/partners/rsc.jpg', label: 'RSC', alt: 'Royal Society for the Prevention of Accidents logo' },
+  { src: '/assets/partners/nirapan.jpg', label: 'NIRAPON', alt: 'NIRAPON logo' },
+  { src: '/assets/partners/leed.png', label: 'LEED', alt: 'LEED green building logo' },
+  { src: '/assets/partners/bfscd.png', label: 'BFSCD', alt: 'Bangladesh Fire Service and Civil Defence logo' },
+  { src: '/assets/partners/buet.jpg', label: 'BUET', alt: 'Bangladesh University of Engineering and Technology logo' },
+  { src: '/assets/partners/dife.jpg', label: 'DIFE', alt: 'Department of Inspection for Factories and Establishments logo' },
+  { src: '/assets/partners/ul.avif', label: 'UL', alt: 'UL Listed logo' },
+]
+
+const COMPLETED_PROJECTS = [
+  {
+    title: 'Garment Factory Fire Protection',
+    category: 'Fire Protection',
+    location: 'Gazipur, Bangladesh',
+    image: '/images/projects/ananta-huaxiang-main.jpg',
+    href: '/projects',
+  },
+  {
+    title: 'Fakir Eco Knitwears Ltd.',
+    category: 'Fire Detection',
+    location: 'Bangladesh',
+    image: '/images/projects/fakir-exo.webp',
+    href: '/projects',
+  },
+  {
+    title: 'Fakir Knitwears Ltd. – New Building',
+    category: 'Fire Protection',
+    location: 'Bangladesh',
+    image: '/images/projects/fakir-new-building.jpg',
+    href: '/projects',
+  },
+  {
+    title: 'Maheen Label Tex Ltd.',
+    category: 'Fire Detection',
+    location: 'Siddhirgonj, Narayanganj',
+    image: '/images/projects/maheen-label-tex-main.webp',
+    href: '/projects',
+  },
+  {
+    title: 'Ananta Huaxiang Ltd.',
+    category: 'Fire Protection',
+    location: 'Adamjee EPZ, Bangladesh',
+    image: '/images/projects/ananta-huaxiang-main.jpg',
+    href: '/projects',
+  },
+  {
+    title: 'N.K.K. Knitwear Limited',
+    category: 'Fire Detection',
+    location: 'Narayanganj, Bangladesh',
+    image: '/images/projects/n-k-k-knitwear-main.jpg',
+    href: '/projects',
+  },
+]
+
+function StandardsMarquee() {
+  return (
+    <section className="standards-marquee-section">
+      <div className="standards-marquee-card">
+        <div className="standards-marquee-accent" />
+        <div className="standards-marquee-heading">
+          <h2 className="standards-marquee-title">Standards, Authorities &amp; Institutions We Work With</h2>
+          <p className="standards-marquee-subtitle">Trusted compliance, safety, and engineering partners across Bangladesh.</p>
+        </div>
+        <div className="marquee">
+          <div className="marquee__track">
+            <div className="marquee__group">
+              {STANDARDS_MARQUEE_ITEMS.map((item) => (
+                <div key={item.label} className="marquee__item">
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="marquee__logo"
+                    width={160}
+                    height={80}
+                    loading="eager"
+                    decoding="async"
+                  />
+                  <span className="marquee__name">{item.label}</span>
+                </div>
+              ))}
+            </div>
+            <div className="marquee__group" aria-hidden="true">
+              {STANDARDS_MARQUEE_ITEMS.map((item) => (
+                <div key={item.label + '-copy'} className="marquee__item">
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="marquee__logo"
+                    width={160}
+                    height={80}
+                    loading="eager"
+                    decoding="async"
+                  />
+                  <span className="marquee__name">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CompletedProjects() {
+  return (
+    <section className="completed-projects-section">
+      <div className="completed-projects-container container section">
+        <div className="completed-projects-header text-center mb-16">
+          <span className="completed-projects-label">OUR WORK</span>
+          <h2 className="completed-projects-title">Completed Projects</h2>
+          <p className="completed-projects-description">Fire protection, detection, and electrical safety projects delivered across Bangladesh.</p>
+        </div>
+
+        <div className="completed-projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {COMPLETED_PROJECTS.map((project) => (
+            <article key={project.title} className="completed-project-card" aria-label={project.title}>
+              <div className="completed-project-card__image relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
+                />
+                <div className="completed-project-card__overlay absolute inset-0 bg-gradient-to-t from-[#05140e]/90 to-transparent" />
+                <span className="completed-project-card__category absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#F58A1F] text-white text-[10px] font-bold uppercase tracking-tight z-10">
+                  {project.category}
+                </span>
+              </div>
+              <div className="completed-project-card__content p-4 pt-3">
+                <h3 className="completed-project-card__title text-white font-bold text-base mb-1 leading-tight">{project.title}</h3>
+                <p className="completed-project-card__meta text-[#CFE0D8] text-xs mb-3">{project.location}</p>
+                <a href={project.href} className="completed-project-card__link text-[#F58A1F] text-xs font-bold uppercase tracking-tight hover:underline">
+                  View Project <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="completed-projects-footer mt-12 text-center">
+          <a href="/projects" className="completed-projects-button inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#F58A1F] text-white font-semibold rounded-md min-h-[48px] whitespace-nowrap hover:bg-[#e67a23] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus-ring-[#F58A1F]">
+            View All Projects
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function Home() {
   return (
     <div>
-      <Hero />
-      <StandardsCarousel />
+      <StandardsMarquee />
+      <CompletedProjects />
       <CompanyIntroduction />
       <OurServices />
       <OurProducts />
@@ -210,45 +360,6 @@ function FeaturedProjects() {
         </div>
       </div>
     </section>
-  )
-}
-
-function StandardsCarousel() {
-  const items = [
-    { src: '/assets/partners/rsc.jpg', label: 'RSC', alt: 'Royal Society for the Prevention of Accidents logo' },
-    { src: '/assets/partners/nirapan.jpg', label: 'NIRAPAN', alt: 'NIRAPAN logo' },
-    { src: '/assets/partners/leed.png', label: 'LEED', alt: 'LEED green building logo' },
-    { src: '/assets/partners/bfscd.png', label: 'BFSCD', alt: 'Bangladesh Fire Service and Civil Defence logo' },
-    { src: '/assets/partners/buet.jpg', label: 'BUET', alt: 'Bangladesh University of Engineering and Technology logo' },
-    { src: '/assets/partners/dife.jpg', label: 'DIFE', alt: 'Department of Inspection for Factories and Establishments logo' },
-    { src: '/assets/partners/ul.avif', label: 'UL', alt: 'UL Listed logo' },
-  ]
-
-  return (
-    <>
-      <div className="standards-card">
-        <h3 className="standards-title">Standards, Authorities &amp; Institutions We Work With</h3>
-        <div className="standards-track-wrapper">
-          <div className="standards-track">
-            {items.map((item) => (
-              <div key={item.label} className="standards-item" aria-label={item.alt}>
-                <img src={item.src} alt={item.alt} className="standards-logo" loading="lazy" />
-                <span className="standards-label">{item.label}</span>
-              </div>
-            ))}
-            {items.map((item) => (
-              <div key={item.label + '-copy'} className="standards-item" aria-label={item.alt}>
-                <img src={item.src} alt={item.alt} className="standards-logo" loading="lazy" />
-                <span className="standards-label">{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <p className="standards-disclaimer">
-        Logos and names shown represent authorities, standards and institutions relevant to our work. SAFRON TECHNOLOGY does not claim certification or endorsement unless confirmed.
-      </p>
-    </>
   )
 }
 
